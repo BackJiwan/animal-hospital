@@ -28,6 +28,7 @@ dependencies {
     // Groovy 언어 지원
     implementation 'org.codehaus.groovy:groovy:3.0.9'
 
+
     // Spock 프레임워크 기본 의존성
     testImplementation 'org.spockframework:spock-core:2.0-M4-groovy-3.0'
 
@@ -44,4 +45,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+// 자바 소스를 컴파일 할 때 적용할 옵션
+tasks.withType(JavaCompile) {
+    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+    // $javac -encoding UTF-8 ..
+    options.encoding = 'UTF-8'
 }
