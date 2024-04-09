@@ -61,4 +61,21 @@ public class MemberRepository {
         }
     }
 
+    public MemberDto updateMember(MemberDto memberDto) throws SQLException {
+        String sql = "UPDATE members SET name = ?, birth = ? WHERE member_id = ?";
+        try (Connection conn = DataConnectionManager.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, memberDto.getName());
+            pstmt.setDate(2, new java.sql.Date(memberDto.getBirth().getTime()));
+            pstmt.setString(3, memberDto.getMemberId());
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("회원 정보 업데이트 실패: 회원 ID를 찾을 수 없습니다.");
+            }
+            return memberDto;
+        }
+    }
+
 }

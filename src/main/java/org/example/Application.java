@@ -1,14 +1,22 @@
 package org.example;
 
+import lombok.RequiredArgsConstructor;
 import org.example.member.dto.MemberDto;
 import org.example.member.entity.Member;
 import org.example.member.repository.MemberRepository;
 import org.example.member.service.MemberService;
+import org.example.util.HomeMain;
 
 import java.sql.Date;
-
+@RequiredArgsConstructor
 public class Application {
+    static MemberRepository memberRepository;
+    static MemberService memberService;
     public static void main(String[] args) {
+        HomeMain homeMain = new HomeMain(memberRepository,memberService);
+        homeMain.displayHome();
+    }
+    public void temp(){
         System.out.println("Hello world!\n");
         System.out.println("ID: m001인 회원조회\n");
         MemberRepository repo = new MemberRepository();
@@ -34,6 +42,5 @@ public class Application {
 
 //        System.out.println("오길동 회원 삭제");
 //        repo.deleteMember("id5");
-
     }
 }
