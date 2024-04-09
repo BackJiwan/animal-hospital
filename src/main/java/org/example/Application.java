@@ -51,8 +51,5 @@ public class Application {
                 .birth(tempDto.getBirth())
                 .build();
         System.out.println(tempMember.toString());
-
-//        System.out.println("오길동 회원 삭제");
-//        repo.deleteMember("id5");
     }
 }

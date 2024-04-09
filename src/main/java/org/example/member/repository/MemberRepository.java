@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class MemberRepository {
     public MemberDto findMemberById(String memberId) {
-        String sql = "SELECT member_id, name, birth FROM members WHERE member_id = ?";
+        String sql = "SELECT * FROM member WHERE member_id = ?";
 
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -33,11 +33,12 @@ public class MemberRepository {
     }
 
     public MemberDto addMember(MemberDto memberDTO) {
-        String sql = "INSERT INTO members (member_id, name, birth) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO member (member_id, name, birth) VALUES (?, ?, ?)";
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, memberDTO.getMemberId());
+            //
             pstmt.setString(2, memberDTO.getName());
             pstmt.setDate(3, new java.sql.Date(memberDTO.getBirth().getTime()));
 
@@ -49,7 +50,7 @@ public class MemberRepository {
     }
 
     public void deleteMember(String memberId) {
-        String sql = "DELETE FROM members WHERE member_id = ?";
+        String sql = "DELETE FROM member WHERE member_id = ?";
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -62,7 +63,7 @@ public class MemberRepository {
     }
 
     public MemberDto updateMember(MemberDto memberDto) throws SQLException {
-        String sql = "UPDATE members SET name = ?, birth = ? WHERE member_id = ?";
+        String sql = "UPDATE member SET name = ?, birth = ? WHERE member_id = ?";
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

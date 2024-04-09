@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DataConnectionManager {
     private static DataConnectionManager instance;
     private Connection connection;
-    private String url = "jdbc:oracle:thin:@10.211.55.4:1521:xe";
+    private String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private String username = "testuser";
-    private String password = "testuser123";
+    private String password = "test1234";
 
     private DataConnectionManager() {
         try {

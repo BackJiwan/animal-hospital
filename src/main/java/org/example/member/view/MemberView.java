@@ -42,10 +42,12 @@ public class MemberView {
                     while(true){
                         System.out.print("회원id : ");
                         memberId = scanner.nextLine();
-                        if(memberId.isEmpty()||memberId.equals(" %")){
+                        if(memberId.isEmpty()||memberId.contains(" ")
+                        ||!memberId.matches("^[a-zA-Z0-9]*$")){
                             System.out.print("회원id를 입력해주세요\n");
                             continue;
                         }
+                        memberId = "M_" + memberId;
                         break;
                     }
 
@@ -53,7 +55,7 @@ public class MemberView {
                     String name = scanner.nextLine();
 
 
-                    System.out.print("생일 : [ex)2000-07-02] ");
+                    System.out.print("생일 [ex)2000-07-02] : ");
                     String birthInput = scanner.nextLine();
                     Date birthDate;
 
@@ -90,7 +92,7 @@ public class MemberView {
                         Member foundMember = memberService.findMemberById(memberId);
                         System.out.print("새 이름: ");
                         String newName = scanner.nextLine();
-                        System.out.print("새 생일 [yyyy-MM-dd]: ");
+                        System.out.print("새 생일 [yyyy-MM-dd] : ");
                         String newBirth = scanner.nextLine();
                         Date newBirthDate = Date.valueOf(newBirth); // 입력받은 문자열을 Date로 변환
                         memberService.updateMember(new MemberDto(memberId, newName, newBirthDate));
