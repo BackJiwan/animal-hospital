@@ -72,6 +72,7 @@ public class MemberView {
                     System.out.println(name + "님 회원가입이 완료되었습니다.");
                     break;
                 case 2:
+                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("조회할 회원ID : ");
                     memberId = scanner.nextLine();
                     try {
@@ -82,6 +83,7 @@ public class MemberView {
                     }
                     break;
                 case 3:
+                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("수정할 회원ID : ");
                     memberId = scanner.nextLine();
                     try {
@@ -100,6 +102,7 @@ public class MemberView {
                     }
                     break;
                 case 4:
+                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("삭제할 회원ID : ");
                     memberId = scanner.nextLine();
                     try {
