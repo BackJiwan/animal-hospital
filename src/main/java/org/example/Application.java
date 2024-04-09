@@ -8,11 +8,23 @@ import org.example.member.service.MemberService;
 import org.example.util.HomeMain;
 
 import java.sql.Date;
+import java.nio.charset.Charset;
+import java.lang.reflect.Field;
+
 @RequiredArgsConstructor
 public class Application {
+
     static MemberRepository memberRepository;
     static MemberService memberService;
     public static void main(String[] args) {
+        System.setProperty("file.encoding","UTF-8");
+        try{
+            Field charset = Charset.class.getDeclaredField("defaultCharset");
+            charset.setAccessible(true);
+            charset.set(null,null);
+        }
+        catch(Exception e){
+        }
         HomeMain homeMain = new HomeMain(memberRepository,memberService);
         homeMain.displayHome();
     }
