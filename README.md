@@ -31,4 +31,14 @@
 
 - Spock 프레임워크를 이용하여 기능단위로 Mock 테스트를 진행합니다.
 <br>
+## 3. 프로젝트 설계 과정
 
+### 유스케이스 다이어그램
+![readme_mockup2](https://github.com/BackJiwan/animal-hospital/assets/95860566/0a44d5c8-810b-4219-8aea-785497550711)
+<br>
+### 클래스 다이어그램
+![readme_mockup2](https://github.com/BackJiwan/animal-hospital/assets/95860566/17af041d-ac0a-40ba-b2b6-c3b581520c48)
+<br>
+### ER 다이어그램
+![readme_mockup2](https://github.com/BackJiwan/animal-hospital/assets/95860566/f601dde4-a8cb-455a-8b52-dc4e47438c28)
+<br>

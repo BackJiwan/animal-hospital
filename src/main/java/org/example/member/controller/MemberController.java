@@ -7,11 +7,8 @@ import org.example.member.view.MemberView;
 
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberRepository memberRepository = new MemberRepository();
-    private MemberService memberService = new MemberService(memberRepository);
-
     public void memberMenu() {
-        MemberView view = new MemberView(memberRepository,memberService);
+        MemberView view = new MemberView();
         view.memberView();
     }
 }
