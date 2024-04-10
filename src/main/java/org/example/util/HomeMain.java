@@ -3,6 +3,7 @@ package org.example.util;
 import java.util.Scanner;
 
 import lombok.RequiredArgsConstructor;
+import org.example.animal.controller.AnimalController;
 import org.example.member.controller.MemberController;
 import org.example.member.repository.MemberRepository;
 import org.example.member.service.MemberService;
@@ -36,6 +37,9 @@ public class HomeMain {
                     break;
                 case 2:
                     //동물 내역 조회
+                    AnimalController animalController = new AnimalController();
+                    animalController.animalMenu();
+                    break;
                 case 3:
                     // 치료내역조회 메서드 호출
                     break;

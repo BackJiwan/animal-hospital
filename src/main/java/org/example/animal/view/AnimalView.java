@@ -58,24 +58,24 @@ public class AnimalView {
                         //주인의 ID
                         System.out.print("회원id : ");
                         memberId = scanner.nextLine();
-                        if(animalId.isEmpty()||animalId.contains(" ")
-                                ||!animalId.matches("^[a-zA-Z0-9가-힣]*$")){
+                        if(memberId.isEmpty()||memberId.contains(" ")
+                                ||!memberId.matches("^[a-zA-Z0-9]*$")){
                             System.out.print("올바른 회원id를 입력해주세요.\n");
                             continue;
                         }
+                        memberId = "M_" + memberId;
                         MemberDto existingMember = memberRepository.findMemberById(memberId);
                         if (existingMember == null) {
                             System.out.println("해당 ID의 회원이 존재하지 않습니다.");
                             continue;
                         }
-                        memberId = "A_" + memberId;
                         break;
                     }
 
                     while(true) {
                         System.out.print("이름 : ");
                         name = scanner.nextLine();
-                        if (name.isEmpty()||!animalId.matches("^[a-zA-Z0-9가-힣]*$")) {
+                        if (name.isEmpty()||!name.matches("^[a-zA-Z0-9가-힣]*$")) {
                             System.out.print("올바른 이름을 입력해주세요.\n");
                             continue;
                         }
@@ -96,7 +96,7 @@ public class AnimalView {
                         break;
                     }
 
-                    System.out.println("종 [ex:골든 리트리버] : ");
+                    System.out.print("종 [ex:골든 리트리버] : ");
                     String species = scanner.nextLine();
 
                     // 입력 받은 정보로 AnimalDto 생성
@@ -110,6 +110,7 @@ public class AnimalView {
                     scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("조회할 동물ID : ");
                     animalId = scanner.nextLine();
+                    animalId = "A_" + animalId;
                     try {
                         Animal foundAnimal = animalService.findAnimalById(animalId);
                         System.out.println(foundAnimal.toString());
@@ -121,16 +122,16 @@ public class AnimalView {
                     scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("수정할 동물ID : ");
                     animalId = scanner.nextLine();
+                    animalId = "A_" + animalId;
                     try {
                         //이름 받기
                         Animal foundAnimal = animalService.findAnimalById(animalId);
-                        String memberId = animalRepository.findMemberById(animalId).getMemberId();
-                        System.out.print("새 이름: ");
+                        memberId = animalRepository.findMemberById(animalId).getMemberId();
                         String newName;
                         while(true) {
-                            System.out.print("이름 : ");
+                            System.out.print("새 이름 : ");
                             newName = scanner.nextLine();
-                            if (newName.isEmpty()||!animalId.matches("^[a-zA-Z0-9가-힣]*$")) {
+                            if (newName.isEmpty()||!newName.matches("^[a-zA-Z0-9가-힣]*$")) {
                                 System.out.print("올바른 이름을 입력해주세요.\n");
                                 continue;
                             }
@@ -149,7 +150,9 @@ public class AnimalView {
                             }
                             break;
                         }
-                        animalService.updateAnimal(new AnimalDto(animalId, newName, newBirthDate));
+                        System.out.print("새 종 : ");
+                        String newSpecies = scanner.nextLine();
+                        animalService.updateAnimal(new AnimalDto(animalId, memberId, newName, newBirthDate, newSpecies));
                         System.out.println(animalId + " 회원 정보가 수정되었습니다.");
                     } catch (NullPointerException e) {
                         System.out.println("해당 ID의 회원이 존재하지 않습니다.");
@@ -159,13 +162,14 @@ public class AnimalView {
                     break;
                 case 4:
                     scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
-                    System.out.print("삭제할 회원ID : ");
+                    System.out.print("삭제할 동물ID : ");
                     animalId = scanner.nextLine();
+                    animalId = "A_" + animalId;
                     try {
                         animalService.deleteAnimal(animalId);
-                        System.out.println(animalId + " 회원이 삭제되었습니다.");
+                        System.out.println(animalId + " 동물이 삭제되었습니다.");
                     } catch (Exception e) {
-                        System.out.println("회원 삭제 중 오류가 발생했습니다: " + e.getMessage());
+                        System.out.println("동물 삭제 중 오류가 발생했습니다: " + e.getMessage());
                     }
                     break;
                 case 5:

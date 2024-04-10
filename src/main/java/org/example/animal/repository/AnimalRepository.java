@@ -50,7 +50,7 @@ public class AnimalRepository {
     }
 
     public void deleteAnimal(String animalId) {
-        String sql = "DELETE FROM animal WHERE member_id = ?";
+        String sql = "DELETE FROM animal WHERE animal_id = ?";
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -63,13 +63,14 @@ public class AnimalRepository {
     }
 
     public AnimalDto updateAnimal(AnimalDto animalDto) throws SQLException {
-        String sql = "UPDATE animal SET name = ?, birth = ? WHERE animal_id = ?";
+        String sql = "UPDATE animal SET name = ?, birth = ?, species = ? WHERE animal_id = ?";
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, animalDto.getName());
             pstmt.setDate(2, new java.sql.Date(animalDto.getBirth().getTime()));
-            pstmt.setString(3, animalDto.getAnimalId());
+            pstmt.setString(3, animalDto.getSpecies());
+            pstmt.setString(4, animalDto.getAnimalId());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {

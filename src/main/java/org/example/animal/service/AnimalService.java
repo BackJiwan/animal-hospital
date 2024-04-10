@@ -47,7 +47,7 @@ public class AnimalService {
         // 동물 정보 업데이트
         try {
             animalRepository.updateAnimal(animalDto);
-            System.out.println("회원 정보가 성공적으로 업데이트 되었습니다.");
+            System.out.println("동물 정보가 성공적으로 업데이트 되었습니다.");
             return Animal.builder()
                     .animalId(animalDto.getAnimalId())
                     .memberId(animalDto.getMemberId())
