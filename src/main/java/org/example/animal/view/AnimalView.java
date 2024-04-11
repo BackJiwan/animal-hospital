@@ -116,7 +116,8 @@ public class AnimalView {
                     animalId = "A_" + animalId;
                     try {
                         Animal foundAnimal = animalService.findAnimalById(animalId);
-                        System.out.println(foundAnimal.toString());
+                        System.out.println("동물ID: " + foundAnimal.getAnimalId() + ", 주인ID: "+foundAnimal.getMemberId()+
+                                ", 이름: " + foundAnimal.getName() + ", 생일: " + foundAnimal.getBirth()+", 종: "+foundAnimal.getSpecies());
                     } catch (NullPointerException e) {
                         System.out.println("해당 ID의 동물이 존재하지 않습니다.");
                     }
