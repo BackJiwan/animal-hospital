@@ -30,11 +30,13 @@ public class AnimalView {
             System.out.println("4. 동물삭제");
             System.out.println("5. 뒤로가기");
             System.out.print("선택: ");
-            choice = scanner.nextInt();
+            //문자열로 받는 이유는 nextInt() 가 자꾸 개행을 남겨두고 가져가서 문제가 생겼기 때문임
+            String temp = scanner.nextLine(); // 사용자 입력을 문자열로 받음
+            choice = Integer.parseInt(temp); //이후 정수로 바꿈
 
             switch (choice) {
                 case 1:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
+                    //scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     String animalId;
                     String memberId;
                     String name;
@@ -63,6 +65,7 @@ public class AnimalView {
                             System.out.print("올바른 회원id를 입력해주세요.\n");
                             continue;
                         }
+                        //주인 ID 생성은 주인메뉴에서 하기 때문에, 이곳에서는 단지 이미 있는 주인 ID
                         memberId = "M_" + memberId;
                         MemberDto existingMember = memberRepository.findMemberById(memberId);
                         if (existingMember == null) {
@@ -107,7 +110,7 @@ public class AnimalView {
                     System.out.println(name + "등록이 완료되었습니다.");
                     break;
                 case 2:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
+                    //scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("조회할 동물ID : ");
                     animalId = scanner.nextLine();
                     animalId = "A_" + animalId;
@@ -119,7 +122,7 @@ public class AnimalView {
                     }
                     break;
                 case 3:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
+                    //scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("수정할 동물ID : ");
                     animalId = scanner.nextLine();
                     animalId = "A_" + animalId;
@@ -161,7 +164,7 @@ public class AnimalView {
                     }
                     break;
                 case 4:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
+                    //scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
                     System.out.print("삭제할 동물ID : ");
                     animalId = scanner.nextLine();
                     animalId = "A_" + animalId;

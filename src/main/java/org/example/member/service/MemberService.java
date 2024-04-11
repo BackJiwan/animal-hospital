@@ -11,10 +11,6 @@ import org.example.member.repository.MemberRepository;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-//    public MemberService(MemberRepository memberRepository) {
-//        this.memberRepository = memberRepository;
-//    }
-
     public Member registerMember(MemberDto memberDto) {
         // 여기서 중복 회원 검증 등의 로직을 추가할 수 있음
         memberRepository.addMember(memberDto);

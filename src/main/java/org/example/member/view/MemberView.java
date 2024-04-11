@@ -11,8 +11,72 @@ import java.sql.Date;
 import java.util.Scanner;
 @RequiredArgsConstructor
 public class MemberView {
-    private final MemberRepository memberRepository;
-    private final MemberService memberService;
+    private final MemberRepository memberRepository = new MemberRepository();
+    private MemberService memberService = new MemberService(memberRepository);
+
+    private String getId(Scanner scanner, String prompt) {
+        String input;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9]*$")) {
+                System.out.println("올바른 값을 입력해주세요. 빈 문자열 또는 공백을 포함할 수 없습니다.");
+
+            }
+        } while (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9]*$"));
+        return input;
+    }
+
+    //언더바가 포함된 회원아이디를 입력받을때에는 기존의 정규식으로 필터링 하면(getId) 언더바때문에 문제가 생김
+    //DB에서 찾기위한 ID를 사용자로부터 입력받을때에만 searchId 메서드를 사용
+    private String searchId(Scanner scanner, String prompt) {
+        String input;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9_]*$")) {
+                System.out.println("올바른 값을 입력해주세요. 빈 문자열 또는 공백을 포함할 수 없습니다.");
+
+            }
+        } while (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9_]*$"));
+        return input;
+    }
+
+    private String getName(Scanner scanner, String prompt) {
+        String input;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9가-힣]*$")) {
+                System.out.println("올바른 값을 입력해주세요. 빈 문자열 또는 공백을 포함할 수 없습니다.");
+            }
+        } while (input.isEmpty() || input.contains(" ")||!input.matches("^[a-zA-Z0-9가-힣]*$"));
+        return input;
+    }
+
+    private Date getDate(Scanner scanner, String prompt) {
+        Date date = null;
+        boolean isValidDate = false;
+
+        while (!isValidDate) {
+            System.out.print(prompt);
+            String dateInput = scanner.nextLine().trim();
+
+            // 빈 문자열이나 공백을 포함한 입력을 방지
+            if (dateInput.isEmpty() || dateInput.contains(" ")) {
+                System.out.println("올바른 값을 입력해주세요. 빈 문자열 또는 공백을 포함할 수 없습니다.");
+                continue;
+            }
+
+            try {
+                date = Date.valueOf(dateInput);
+                isValidDate = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("잘못된 날짜 포맷입니다. yyyy-MM-dd 형식으로 입력해주세요.");
+            }
+        }
+        return date;
+    }
     public void memberView() {
 
         Scanner scanner = new Scanner(System.in);
@@ -25,88 +89,51 @@ public class MemberView {
             System.out.println("4. 회원삭제");
             System.out.println("5. 뒤로가기");
             System.out.print("선택: ");
-            choice = scanner.nextInt();
+            //문자열로 받는 이유는 nextInt() 가 자꾸 개행을 남겨두고 가져가서 문제가 생겼기 때문임
+            String temp = scanner.nextLine(); // 사용자 입력을 문자열로 받음
+            choice = Integer.parseInt(temp); //이후 정수로 바꿈
+
 
             switch (choice) {
                 case 1:
-                    // 회원가입 로직 호출
-                    //스캐너로 회원 정보 입력받기 가정
-                    //입력받은 정보들에서 id,이름,생일 추출
-//                    Date birthDate = Date.valueOf("2000-07-07");
-//                    MemberDto memberDto = new MemberDto("id7","칠길동", birthDate);
-//                    memberService.registerMember(memberDto);
-//                    System.out.println(memberDto.getName()+"님 회원가입이 완료되었습니다.");
-//                    break;
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
-                    String memberId;
-                    while(true){
-                        System.out.print("회원id : ");
-                        memberId = scanner.nextLine();
-                        if(memberId.isEmpty()||memberId.contains(" ")
-                        ||!memberId.matches("^[a-zA-Z0-9]*$")){
-                            System.out.print("회원id를 입력해주세요\n");
-                            continue;
-                        }
-                        memberId = "M_" + memberId;
-                        break;
-                    }
+                    String memberId = getId(scanner, "회원id : ");
+                    String name = getName(scanner, "이름 : ");
+                    Date birthDate = getDate(scanner,"생일 [ex)2000-01-01] : ");
+                    memberId = "M_" + memberId;
+                    name = "MN_"+name;
 
-                    System.out.print("이름 : ");
-                    String name = scanner.nextLine();
-
-
-                    System.out.print("생일 [ex)2000-07-02] : ");
-                    String birthInput = scanner.nextLine();
-                    Date birthDate;
-
-                    try {
-                        birthDate = Date.valueOf(birthInput); // 입력받은 문자열을 Date로 변환
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("잘못된 날짜 포맷입니다. yyyy-MM-dd 형식으로 입력해주세요.");
-                        break; // 잘못된 입력 처리
-                    }
-
-                    // 입력 받은 정보로 MemberDto 생성
                     MemberDto memberDto = new MemberDto(memberId, name, birthDate);
-
-                    // 회원가입 로직 호출
                     memberService.registerMember(memberDto);
                     System.out.println(name + "님 회원가입이 완료되었습니다.");
                     break;
                 case 2:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
-                    System.out.print("조회할 회원ID : ");
-                    memberId = scanner.nextLine();
+                    memberId = searchId(scanner, "조회할 회원ID : ");
+                    memberId = "M_" + memberId;
                     try {
                         Member foundMember = memberService.findMemberById(memberId);
-                        System.out.println(foundMember.toString());
+                        System.out.println("회원ID: " + foundMember.getMemberId() + ", 이름: " + foundMember.getName() + ", 생일: " + foundMember.getBirth());
                     } catch (NullPointerException e) {
                         System.out.println("해당 ID의 회원이 존재하지 않습니다.");
                     }
                     break;
                 case 3:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
-                    System.out.print("수정할 회원ID : ");
-                    memberId = scanner.nextLine();
+                    memberId = searchId(scanner, "수정할 회원ID : ");
+                    memberId = "M_"+memberId;
                     try {
                         Member foundMember = memberService.findMemberById(memberId);
-                        System.out.print("새 이름: ");
-                        String newName = scanner.nextLine();
-                        System.out.print("새 생일 [yyyy-MM-dd] : ");
-                        String newBirth = scanner.nextLine();
-                        Date newBirthDate = Date.valueOf(newBirth); // 입력받은 문자열을 Date로 변환
+                        String newName = getName(scanner,"새 이름: ");
+
+                        newName = "MN_"+newName;
+                        Date newBirthDate = getDate(scanner,"새 생일 [ex)2000-01-01] : ");
                         memberService.updateMember(new MemberDto(memberId, newName, newBirthDate));
                         System.out.println(memberId + " 회원 정보가 수정되었습니다.");
                     } catch (NullPointerException e) {
                         System.out.println("해당 ID의 회원이 존재하지 않습니다.");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("잘못된 날짜 포맷입니다. yyyy-MM-dd 형식으로 입력해주세요.");
                     }
                     break;
                 case 4:
-                    scanner.nextLine(); // 이전 nextInt() 후 남은 개행문자 처리
-                    System.out.print("삭제할 회원ID : ");
-                    memberId = scanner.nextLine();
+                    memberId = getId(scanner, "삭제할 회원ID : ");
+                    memberId = "M_"+memberId;
                     try {
                         memberService.deleteMember(memberId);
                         System.out.println(memberId + " 회원이 삭제되었습니다.");
@@ -122,4 +149,5 @@ public class MemberView {
             }
         } while (choice != 5);
     }
+
 }

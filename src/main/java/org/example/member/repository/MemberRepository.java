@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class MemberRepository {
     public MemberDto findMemberById(String memberId) {
-        String sql = "SELECT * FROM member WHERE member_id = ?";
+        String sql = "SELECT member_id, name, birth FROM member WHERE member_id = ?";
 
         try (Connection conn = DataConnectionManager.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -38,7 +38,6 @@ public class MemberRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, memberDTO.getMemberId());
-            //
             pstmt.setString(2, memberDTO.getName());
             pstmt.setDate(3, new java.sql.Date(memberDTO.getBirth().getTime()));
 
