@@ -27,6 +27,8 @@ dependencies {
 
     // Groovy 언어 지원
     implementation 'org.codehaus.groovy:groovy:3.0.9'
+    //json 파싱
+    implementation 'org.json:json:20210307'
 
 
     // Spock 프레임워크 기본 의존성

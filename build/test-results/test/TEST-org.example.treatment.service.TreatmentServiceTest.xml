@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.treatment.service.TreatmentServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-04-11T00:49:37" hostname="JWs-MacBook-Pro-14.local" time="0.018">
+  <properties/>
+  <testcase name="치료 등록 테스트" classname="org.example.treatment.service.TreatmentServiceTest" time="0.018">
+    <failure message="java.lang.NullPointerException: Cannot invoke &quot;org.example.treatment.dto.TreatmentDto.getTreatId()&quot; because &quot;savedTreatmentDto&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;org.example.treatment.dto.TreatmentDto.getTreatId()&quot; because &quot;savedTreatmentDto&quot; is null
+	at org.example.treatment.service.TreatmentService.registerTreatment(TreatmentService.java:18)
+	at org.example.treatment.service.TreatmentServiceTest.치료 등록 테스트(TreatmentServiceTest.groovy:26)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

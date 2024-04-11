@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.member.service.MemberServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-04-09T04:49:11" hostname="JWs-MacBook-Pro-14.local" time="0.025">
-  <properties/>
-  <testcase name="회원수정 테스트" classname="org.example.member.service.MemberServiceTest" time="0.025"/>
-  <system-out><![CDATA[회원 정보가 성공적으로 업데이트 되었습니다.
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

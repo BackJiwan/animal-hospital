@@ -8,6 +8,7 @@ import org.example.animal.service.AnimalService;
 import org.example.member.dto.MemberDto;
 import org.example.member.repository.MemberRepository;
 import org.example.member.service.MemberService;
+import org.example.util.AnimalStatusQuery;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -28,7 +29,8 @@ public class AnimalView {
             System.out.println("2. 동물정보조회");
             System.out.println("3. 동물정보수정");
             System.out.println("4. 동물삭제");
-            System.out.println("5. 뒤로가기");
+            System.out.println("5. 지역내 견종 마릿수 검색");
+            System.out.println("6. 뒤로가기");
             System.out.print("선택: ");
             //문자열로 받는 이유는 nextInt() 가 자꾸 개행을 남겨두고 가져가서 문제가 생겼기 때문임
             String temp = scanner.nextLine(); // 사용자 입력을 문자열로 받음
@@ -116,7 +118,8 @@ public class AnimalView {
                     animalId = "A_" + animalId;
                     try {
                         Animal foundAnimal = animalService.findAnimalById(animalId);
-                        System.out.println(foundAnimal.toString());
+                        System.out.println("동물ID: " + foundAnimal.getAnimalId() + ", 주인ID: "+foundAnimal.getMemberId()+
+                                ", 이름: " + foundAnimal.getName() + ", 생일: " + foundAnimal.getBirth()+", 종: "+foundAnimal.getSpecies());
                     } catch (NullPointerException e) {
                         System.out.println("해당 ID의 동물이 존재하지 않습니다.");
                     }
@@ -176,11 +179,24 @@ public class AnimalView {
                     }
                     break;
                 case 5:
-                    System.out.println("메인 화면으로 돌아갑니다.");
+                    // 지역내 견종 마릿수 검색 기능을 수행하는 새로운 case 추가
+                    AnimalStatusQuery reqAnimal = new AnimalStatusQuery();
+                    try {
+                        reqAnimal.req(); // 사용자에게 입력을 받아 API 요청을 수행하고 결과를 출력
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
+                case 6:
+                    // 뒤로가기 기능을 처리하는 새로운 case 추가
+                    System.out.println("메인 화면으로 돌아갑니다.");
+                    return; // 메인 화면으로 돌아가기 위해 animalView 메서드 종료
+//                case 5:
+//                    System.out.println("메인 화면으로 돌아갑니다.");
+//                    break;
                 default:
                     System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 }
