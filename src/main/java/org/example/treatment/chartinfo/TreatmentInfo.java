@@ -23,6 +23,10 @@ public class TreatmentInfo {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
+                if (rs.getString("member_id") == null) {
+                    System.out.println("해당 치료기록이 온전하지 않습니다.");
+                    break;
+                }
                 System.out.println("==========================================");
                 System.out.println("진료ID : " + rs.getString("treat_id"));
                 System.out.println("동물ID : " + rs.getString("animal_id"));
