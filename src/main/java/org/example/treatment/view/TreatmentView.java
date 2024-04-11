@@ -1,6 +1,8 @@
 package org.example.treatment.view;
 
 import lombok.RequiredArgsConstructor;
+import org.example.animal.repository.AnimalRepository;
+import org.example.animal.service.AnimalService;
 import org.example.member.repository.MemberRepository;
 import org.example.member.service.MemberService;
 import org.example.treatment.chartinfo.TreatmentInfo;
@@ -17,6 +19,10 @@ import java.util.Scanner;
 public class TreatmentView {
     private final TreatmentService treatmentService;
     private final TreatmentRepository treatmentRepository;
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
+    private final AnimalService animalService;
+    private final AnimalRepository animalRepository;
 
     private String getId(Scanner scanner, String prompt) {
         String input;
@@ -97,10 +103,23 @@ public class TreatmentView {
             switch (choice) {
                 case 1:
                     treatId = generateTreatmentId();
-                    animalId = getId(scanner, "반려동물 ID: ");
-                    animalId = "A_"+animalId;
-                    memberId = getId(scanner, "회원 ID: ");
-                    memberId = "M_"+memberId;
+                    while(true) {
+                        animalId = getId(scanner, "반려동물 ID: ");
+                        animalId = "A_"+animalId;
+                        //동물이 있는지 확인
+                        if (animalRepository.findMemberById(animalId) == null) {
+                            System.out.println("등록되지 않은 동물입니다.");
+                        } else break;
+                    }
+
+                    while(true) {
+                        memberId = getId(scanner, "회원 ID: ");
+                        memberId = "M_"+memberId;
+                        if (memberRepository.findMemberById(memberId) == null) {
+                            System.out.println("등록되지 않은 회원입니다.");
+                        } else break;
+                    }
+
                     day = getDate(scanner, "치료 날짜 [yyyy-MM-dd]: ");
                     treatmentService.registerTreatment(new TreatmentDto(treatId, animalId, memberId, day, "진단전", "조치전", 0));
                     System.out.println("치료가 접수되었습니다. 치료 ID: " + treatId);

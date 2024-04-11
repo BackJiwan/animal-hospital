@@ -11,7 +11,6 @@ import java.util.List;
 
 public class TreatmentInfo {
     public void viewChartInfo (List<Treatment> treatments, int num) {
-        System.out.println("뷰차트인포는 들어와지나?");
         String sql = "SELECT T.treat_id, T.animal_id, T.member_id, T.day, A.name, A.birth, A.species, T.disease, T.treat, T.cost\n" +
                 "FROM treatment T JOIN animal A ON T.animal_id = A.animal_id WHERE T.treat_id = ?";
         num--;
@@ -23,11 +22,12 @@ public class TreatmentInfo {
 
             pstmt.setString(1, treatId);
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("반복문 앞까지는 와지나..?");
-            System.out.println("실행된 SQL 쿼리: " + sql);
-            System.out.println("조회된 treatId: " + treatId);
 
             while (rs.next()) {
+                if (rs.getString("member_id") == null) {
+                    System.out.println("해당 치료기록이 온전하지 않습니다.");
+                    break;
+                }
                 System.out.println("==========================================");
                 System.out.println("진료ID : " + rs.getString("treat_id"));
                 System.out.println("동물ID : " + rs.getString("animal_id"));
