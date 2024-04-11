@@ -64,3 +64,6 @@
 
 ### 추상화
 - 인터페이스를 도입하여 추상화를 적극적으로 사용하면 좋을 것 같다.
+
+## 5. 노션 페이지 
+- https://intelligent-drill-0f8.notion.site/DB-2-7c4cf0687ac64e21974d4a3eaa05e0b6?pvs=4
