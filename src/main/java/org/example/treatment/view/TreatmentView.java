@@ -3,6 +3,7 @@ package org.example.treatment.view;
 import lombok.RequiredArgsConstructor;
 import org.example.member.repository.MemberRepository;
 import org.example.member.service.MemberService;
+import org.example.treatment.chartinfo.TreatmentInfo;
 import org.example.treatment.dto.TreatmentDto;
 import org.example.treatment.entity.Treatment;
 import org.example.treatment.repository.TreatmentRepository;
@@ -175,10 +176,32 @@ public class TreatmentView {
                         break;
                     }
                     System.out.println("조회된 치료 내역:");
+                    int index = 1;
                     for (Treatment treatment : treatments) {
-                        System.out.println("치료ID: " + treatment.getTreatId() + ", 날짜: " + treatment.getDay() + ", 병명: " + treatment.getDisease() + ", 조치: " + treatment.getTreat() + ", 비용: " + treatment.getCost());
+                        System.out.println(index++ + "\t : 진료ID: " + treatment.getTreatId() + ", 날짜: " + treatment.getDay() + ", 병명: " + treatment.getDisease() + ", 조치: " + treatment.getTreat() + ", 비용: " + treatment.getCost());
                     }
-                    break;
+                    System.out.println("1. 상세조회");
+                    System.out.println("2. 뒤로가기");
+                    System.out.print("선택 : ");
+                    int secondSelect = Integer.parseInt(scanner.nextLine());
+                    if (secondSelect == 1) {
+                        while (true) {
+                            System.out.print("상세조회 하고싶은 번호를 입력하세요. (0 = 뒤로가기): ");
+                            int infoSelect = Integer.parseInt(scanner.nextLine());
+                            if (infoSelect == 0) {
+                                break;
+                            }
+                            if (infoSelect <= secondSelect || infoSelect > 0) {
+                                TreatmentInfo treatmentInfo = new TreatmentInfo();
+                                treatmentInfo.viewChartInfo(treatments, infoSelect);
+                            }
+                            else {
+                                System.out.println("잘못 선택하셨습니다.");
+                                continue;
+                            }
+                            break;
+                        }
+                    } else break;
                 case 5:
                     System.out.println("메인 화면으로 돌아갑니다.");
                     break;
