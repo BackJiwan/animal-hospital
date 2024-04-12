@@ -16,7 +16,7 @@ import static java.lang.System.getenv;
 
 public class AnimalStatusQuery {
     private static final String API_URL = "https://openapi.gg.go.kr/ANIMALREGSTUS";
-    private static final String API_KEY = "44c89790af644038973a49d94e2937c5";
+    private static final String API_KEY = "A";
 
     public void req() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
